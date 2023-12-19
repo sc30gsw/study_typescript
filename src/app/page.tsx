@@ -1,13 +1,13 @@
 const Home = () => {
   return (
     <div>
-      <Component type="a" />
+      <Component foo />
     </div>
   )
 }
 
-const Component: React.FC<{ type: 'a' }> = ({ type }) => {
-  if (type === 'a') return <div>a</div>
+const Component: React.FC<{ foo?: true }> = ({ foo }) => {
+  if (foo) return <div>a</div>
 
   return <div>test</div>
 }

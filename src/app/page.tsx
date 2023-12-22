@@ -1,15 +1,9 @@
-let obj1: Record<string, unknown> = {}
-let obj2: { [key: string]: unknown } = {}
+import StickyHeadTable from '@/Components/StrickyHeadTable'
 
-let obj3: Record<string, number> = { a: 1, b: 2 }
-let obj4: { [key: number]: string; foo: 'foo' } = {
-  1: 'hoge',
-  2: 'foo',
-  foo: 'foo',
-}
-
-const Home = () => {
-  return <div>test</div>
+const Home = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const posts = await res.json()
+  return <StickyHeadTable rows={posts} />
 }
 
 export default Home

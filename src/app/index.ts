@@ -15,6 +15,4 @@ const foo = (id: string, name: string) => {
   return ''
 }
 
-type Return<T> = T extends (...args: infer U) => any ? U : never
-
-type Foo = Return<typeof foo>
+type Foo = ReturnType<typeof foo>

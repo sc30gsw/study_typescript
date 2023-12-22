@@ -1,15 +1,16 @@
-const isString = (arg: string | number): arg is string => {
-  return typeof arg === 'string'
+const getProperty = <T, K extends keyof T>(obj: T, key: K) => {
+  return obj[key]
 }
 
-const foo = <T extends string | number>(arg: T) => {
-  if (isString(arg)) {
-    return { value: arg.toUpperCase() }
-  }
-
-  return { value: arg.toFixed() }
+const setProperty = <T, K extends keyof T>(obj: T, key: K, value: T[K]) => {
+  obj[key] = value
 }
 
-// const foo1 = foo<number[]>([1, 2, 3])
-// const foo2 = foo<{ foo: string[] }>({ foo: ['0', '1'] })
-const foo1 = foo('hoge')
+const obj = {
+  foo: 1,
+  bar: 2,
+  baz: 3,
+}
+
+getProperty(obj, 'bar')
+setProperty(obj, 'bar', 100)

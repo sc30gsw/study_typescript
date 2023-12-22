@@ -1,33 +1,17 @@
-const obj1 = {
-  foo: 'foo',
-  bar: 'bar',
+type User<T> = {
+  name: string
+  state: T
 }
 
-const obj2: typeof obj1 = {
-  foo: 'hoge',
-  bar: 'fuga',
+type Japanese = User<'東京都' | '大阪府'>
+type American = User<'CA' | ' NY'>
+
+const user1: Japanese = {
+  name: '田中',
+  state: '東京都',
 }
 
-const double = (x: number | string) => {
-  if (typeof x === 'string') return Number(x) * 2
-
-  return x * 2
+const user2: American = {
+  name: 'john',
+  state: 'CA',
 }
-
-type Obj = {
-  foo: string
-  bar: string
-}
-
-type Key = keyof Obj
-
-const key: Key = 'bar'
-
-const obj = {
-  foo: 'foo',
-  bar: 'bar',
-}
-
-type KeyObj = keyof typeof obj
-
-const keyObj: KeyObj = 'foo'

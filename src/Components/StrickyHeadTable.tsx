@@ -50,6 +50,39 @@ const StickyHeadTable: React.FC<Props> = ({ rows }) => {
   const classes = useStyles()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [selected, setSelected] = React.useState<number[]>([])
+
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelected = rows.map((n) => n.id)
+      setSelected(newSelected)
+      return
+    }
+    setSelected([])
+  }
+
+  const handleCheckboxClick = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
+      const selectedIndex = selected.indexOf(id)
+      let newSelected: number[] = []
+
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id)
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1))
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1))
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(
+          selected.slice(0, selectedIndex),
+          selected.slice(selectedIndex + 1),
+        )
+      }
+
+      setSelected(newSelected)
+    },
+    [selected],
+  )
 
   const handleChangePage = useCallback((event: unknown, newPage: number) => {
     console.log('new Page', newPage)
@@ -118,7 +151,23 @@ const StickyHeadTable: React.FC<Props> = ({ rows }) => {
           >
             <TableHead>
               <TableRow>
-                <TableCell />
+                <TableCell
+                  align="center"
+                  padding="checkbox"
+                  className={classes.stickyHeader}
+                >
+                  <Checkbox
+                    color="primary"
+                    indeterminate={
+                      selected.length > 0 && selected.length < rows.length
+                    }
+                    checked={rows.length > 0 && selected.length === rows.length}
+                    onChange={handleSelectAllClick}
+                    inputProps={{
+                      'aria-label': 'select all desserts',
+                    }}
+                  />
+                </TableCell>
                 <TableCell>Id</TableCell>
                 <TableCell align="left">UserId</TableCell>
                 <TableCell align="left">Title</TableCell>
@@ -136,9 +185,14 @@ const StickyHeadTable: React.FC<Props> = ({ rows }) => {
                     <TableCell
                       component="th"
                       scope="row"
+                      padding="checkbox"
                       className={classes.stickyHeader}
                     >
-                      <Checkbox />
+                      <Checkbox
+                        color="primary"
+                        checked={selected.includes(row.id)}
+                        onChange={(event) => handleCheckboxClick(event, row.id)}
+                      />
                     </TableCell>
                     <TableCell
                       component="th"

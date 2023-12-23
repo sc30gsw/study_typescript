@@ -10,7 +10,7 @@ import { Pagination } from '@mui/material'
 import Table from '@mui/material/Table'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 const useStyles = makeStyles({
   root: {
@@ -30,6 +30,16 @@ const useStyles = makeStyles({
   cell: {
     minWidth: 400,
   },
+  roundedPaginationItem: {
+    '& .MuiButtonBase-root': {
+      borderRadius: '50% !important',
+    },
+  },
+  menuItem: {
+    '& .MuiButtonBase-root': {
+      padding: '10px 15px !important',
+    },
+  },
 })
 
 type Props = {
@@ -41,26 +51,45 @@ const StickyHeadTable: React.FC<Props> = ({ rows }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = useCallback((event: unknown, newPage: number) => {
+    console.log('new Page', newPage)
+
     setPage(newPage - 1)
-  }
+  }, [])
 
-  const handleChangeTablePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
+  const handleChangeTablePage = useCallback(
+    (event: unknown, newPage: number) => {
+      setPage(newPage)
+    },
+    [],
+  )
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
+  const handleChangeRowsPerPage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setRowsPerPage(Number(event.target.value))
+      setPage(0)
+    },
+    [],
+  )
 
   return (
     <>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
+        slotProps={{
+          select: {
+            MenuProps: {
+              MenuListProps: {
+                sx: {
+                  display: 'flex',
+                  flexDirection: 'column',
+                },
+                classes: { root: classes.menuItem },
+              },
+            },
+          },
+        }}
         count={rows.length}
         rowsPerPage={rowsPerPage}
         labelRowsPerPage="1ページあたりの表示数"
@@ -69,12 +98,14 @@ const StickyHeadTable: React.FC<Props> = ({ rows }) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
         ActionsComponent={() => (
           <Pagination
+            className={classes.roundedPaginationItem}
             count={Math.ceil(rows.length / rowsPerPage)}
             page={page + 1}
             onChange={handleChangePage}
             showFirstButton
             showLastButton
-            sx={{ ml: '10px', width: '650px' }}
+            color="primary"
+            sx={{ ml: '10px', width: '750px' }}
           />
         )}
       />

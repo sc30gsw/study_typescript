@@ -121,8 +121,8 @@ const StickyHeadTable: React.FC<Props> = ({ rows }) => {
                 <TableCell />
                 <TableCell>Id</TableCell>
                 <TableCell align="left">UserId</TableCell>
-                <TableCell align="right">Title</TableCell>
-                <TableCell align="right">Body</TableCell>
+                <TableCell align="left">Title</TableCell>
+                <TableCell align="left">Body</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

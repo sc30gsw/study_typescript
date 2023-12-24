@@ -1,3 +1,4 @@
 declare module 'react' {
-  const bar: number
+  export const bar: number
+  export {}
 }

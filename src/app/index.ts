@@ -81,5 +81,4 @@ declare namespace MyNamespace {
 
 type NamespaceFoo = MyNamespace.User
 
-declare var x: number
-x = 0
+process.env.FOO

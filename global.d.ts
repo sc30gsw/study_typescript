@@ -1,3 +1,5 @@
-declare module 'foo' {
+declare module 'react' {
   const bar: number
 }
+
+export {}

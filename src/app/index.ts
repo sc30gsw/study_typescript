@@ -1,3 +1,1 @@
-import foo from 'foo'
-
-foo.bar
+import { bar, FC } from 'react'

@@ -71,8 +71,8 @@ const deepUser: PartialDeepUser = {
   address: {},
 }
 
-namespace MyNamespace {
-  export type User = {
+declare namespace MyNamespace {
+  type User = {
     name: string
     age: number | null
     country?: 'US' | 'UK' | 'JP'

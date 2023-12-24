@@ -1,4 +1,6 @@
+import type { FC } from 'react'
+
 declare module 'react' {
-  export const bar: number
-  export {}
+  const bar: number
+  type CFC<P = {}> = FC<P & { className?: string }>
 }

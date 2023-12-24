@@ -1,9 +1,3 @@
-declare global {
-  declare namespace NodeJS {
-    interface ProcessEnv {
-      readonly FOO: string
-    }
-  }
+declare module 'foo' {
+  const bar: number
 }
-
-export {}

@@ -16,3 +16,40 @@ const foo = (id: string, name: string) => {
 }
 
 type Foo = ReturnType<typeof foo>
+
+type User = {
+  name: string
+  age: number | null
+  country?: 'US' | 'UK' | 'JP'
+}
+
+type ReadonlyUser = Readonly<User>
+
+type PartialUser = Partial<User>
+
+type RequiredUser = Required<User>
+
+type PickUser = Pick<User, 'name' | 'country'>
+
+type OmitUser = Omit<User, 'age'>
+
+const user: OmitUser = {
+  name: 'foo',
+  country: 'JP',
+}
+
+type Bar = Extract<string | number, string>
+type Baz = Exclude<string | number, number>
+
+type Fizz = NonNullable<string | null | undefined | boolean>
+
+type RecordType = Record<string, number>
+const obj: RecordType = {
+  name: 0,
+  hoge: 1,
+}
+
+const bar = (a: string, b: number) => {
+  return
+}
+type ParametersType = Parameters<typeof bar>

@@ -1,3 +1,5 @@
+import type { PartialDeep } from 'type-fest'
+
 type Props = {
   id: string
   name: string
@@ -53,3 +55,18 @@ const bar = (a: string, b: number) => {
   return
 }
 type ParametersType = Parameters<typeof bar>
+
+type DeepUser = {
+  name: string
+  age: number
+  address: {
+    country: 'UK' | 'JP' | 'UK'
+  }
+}
+
+type PartialDeepUser = PartialDeep<DeepUser>
+
+const deepUser: PartialDeepUser = {
+  name: 'user1',
+  address: {},
+}
